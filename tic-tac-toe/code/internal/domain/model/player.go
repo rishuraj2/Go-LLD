@@ -1,23 +1,23 @@
 package model
 
-import "tictactoe/internal/enum"
+import "tictactoe/internal/domain/enum"
 
 type Player struct {
-	Name   string
-	Symbol enum.Symbol
+	name   string
+	symbol enum.Symbol
 }
 
 func NewPlayer(name string, symbol enum.Symbol) Player {
 	return Player{
-		Name:   name,
-		Symbol: symbol,
+		name:   name,
+		symbol: symbol,
 	}
 }
 
 func (this Player) GetName() string {
-	return this.Name
+	return this.name
 }
 
 func (this Player) GetSymbol() enum.Symbol {
-	return this.Symbol
+	return this.symbol
 }

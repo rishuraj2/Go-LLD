@@ -3,13 +3,13 @@ package enum
 type Symbol int
 
 const (
-	X Symbol = iota
+	EMPTY Symbol = iota
+	X
 	O
-	EMPTY
 )
 
 func (this Symbol) String() string {
-	val := []string{"X", "O", "_"}
+	val := []string{"_", "x", "o"}
 	if int(this) < len(val) {
 		return val[int(this)]
 	}
