@@ -51,8 +51,8 @@ func (this *GameHandler) MakeMove(ctx *gin.Context) {
 	gameID, exists := ctx.Params.Get("game_id")
 
 	if !exists {
-		ctx.JSON(http.StatusBadRequest, dto.ErrorResponse{
-			Status:  "bad request",
+		ctx.JSON(http.StatusNotFound, dto.ErrorResponse{
+			Status:  "not found",
 			Message: "invalid game id",
 		})
 		return

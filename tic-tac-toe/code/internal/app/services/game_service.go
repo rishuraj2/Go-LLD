@@ -1,94 +1,32 @@
 package services
 
 import (
-	"fmt"
-	"strings"
-	"tictactoe/internal/api/dto"
-	"tictactoe/internal/domain/enum"
-	"tictactoe/internal/domain/model"
+	"tictactoe/internal/app/usecase"
 	"tictactoe/internal/repository"
 )
 
 type GameService struct {
-	repository repository.GameRepository
+	createGameUsecase *usecase.CreateGameUseCase
+	makeMoveUseCase   *usecase.MakeMoveUseCase
+	getGameUseCase    *usecase.GetGameUseCase
 }
 
 func NewGameService(repo repository.GameRepository) *GameService {
 	return &GameService{
-		repository: repo,
+		createGameUsecase: usecase.NewCreateGameUseCase(repo),
+		makeMoveUseCase:   usecase.NewMakeMoveUseCase(repo),
+		getGameUseCase:    usecase.NewGetGameUseCase(repo),
 	}
 }
 
 func (this *GameService) CreateGame(player1Name, player2Name string, boardSize int) (string, error) {
-	player1Name = strings.TrimSpace(player1Name)
-	player2Name = strings.TrimSpace(player2Name)
-
-	if player1Name == "" ||
-		player2Name == "" ||
-		boardSize <= 2 ||
-		boardSize >= 7 {
-		return "", fmt.Errorf("[GameService] error in creating game. Invalid parameters")
-	}
-
-	p1 := model.NewPlayer(player1Name, enum.X)
-	p2 := model.NewPlayer(player2Name, enum.O)
-	players := [2]model.Player{p1, p2}
-
-	game := model.NewGame(players, boardSize)
-
-	fmt.Println(game.GetBoard())
-
-	if err := this.repository.SaveGame(*game); err != nil {
-		return "", err
-	}
-
-	return game.GetID(), nil
+	return this.createGameUsecase.Execute(player1Name, player2Name, boardSize)
 }
 
 func (this *GameService) MakeMove(gameID string, x, y int) error {
-	game, err := this.repository.GetGameByID(gameID)
-	if err != nil {
-		return err
-	}
-
-	err = game.MakeMove(x, y)
-	if err != nil {
-		return err
-	}
-
-	err = this.repository.UpdateGame(game)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return this.makeMoveUseCase.Execute(gameID, x, y)
 }
 
-func (this *GameService) GetGame(gameID string) (dto.GameResponseData, error) {
-	game, err := this.repository.GetGameByID(gameID)
-	if err != nil {
-		return dto.GameResponseData{}, err
-	}
-
-	players := game.GetPlayers()
-
-	playerResponse := [2]dto.PlayerResponse{
-		{
-			Name:   players[0].GetName(),
-			Symbol: players[0].GetSymbol().String(),
-		},
-		{
-			Name:   players[1].GetName(),
-			Symbol: players[1].GetSymbol().String(),
-		},
-	}
-
-	return dto.GameResponseData{
-		GameID:       game.GetID(),
-		Players:      playerResponse,
-		Board:        game.GetBoard(),
-		ActivePlayer: players[game.GetActivePlayerIndex()].GetName(),
-		GameState:    game.GetGameState().String(),
-	}, nil
-
+func (this *GameService) GetGame(gameID string) (usecase.GetGameResult, error) {
+	return this.getGameUseCase.Execute(gameID)
 }
