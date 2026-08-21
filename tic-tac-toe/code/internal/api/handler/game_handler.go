@@ -104,6 +104,21 @@ func (this *GameHandler) GetGame(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, dto.GameResponse{
 		Status:  "success",
 		Message: "game fetched successfully",
-		Game:    game,
+		Game: dto.GameResponseData{
+			GameID: game.GameID,
+			Players: [2]dto.PlayerResponse{
+				{
+					Name:   game.Players[0].Name,
+					Symbol: game.Players[0].Symbol,
+				},
+				{
+					Name:   game.Players[1].Name,
+					Symbol: game.Players[1].Symbol,
+				},
+			},
+			Board:        game.Board,
+			ActivePlayer: game.ActivePlayer,
+			GameState:    game.GameState,
+		},
 	})
 }
