@@ -16,15 +16,17 @@ func NewCreateCardUseCase(repo repository.BankRepository) *CreateCardUseCase {
 	}
 }
 
-func (this *CreateCardUseCase) Execute(accountNumber, pin string) (card.Card, error) {
+func (this *CreateCardUseCase) Execute(accountNumber, pin string) (string, error) {
 	account, err := this.repository.FindAccountByNumber(accountNumber)
 	if err != nil {
-		return card.Card{}, err
+		return "", err
 	}
 
 	if _, err := this.repository.FindCardByAccountNumber(accountNumber); err == nil {
-		return card.Card{}, errors.New("card already exists")
+		return "", errors.New("card already exists")
 	}
 
-	return card.NewCard(card.NewCardNumberGenerator().Generate(account.GetType()), accountNumber, pin), nil
+	crd := card.NewCard(card.NewCardNumberGenerator().Generate(account.GetType()), accountNumber, pin)
+
+	return crd.GetCardNumber(), nil
 }

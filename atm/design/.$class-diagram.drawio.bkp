@@ -458,16 +458,16 @@
           <mxGeometry height="62" width="320" y="58" as="geometry" />
         </mxCell>
         <mxCell id="Fn-RA2IZX2lPRCD_A4y7-162" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="CashReservoir" vertex="1">
-          <mxGeometry height="130" width="370" x="2690" y="250" as="geometry" />
+          <mxGeometry height="140" width="370" x="2690" y="250" as="geometry" />
         </mxCell>
-        <mxCell id="Fn-RA2IZX2lPRCD_A4y7-163" parent="Fn-RA2IZX2lPRCD_A4y7-162" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- cash: map[Denomination] int" vertex="1">
-          <mxGeometry height="24" width="370" y="26" as="geometry" />
+        <mxCell id="Fn-RA2IZX2lPRCD_A4y7-163" parent="Fn-RA2IZX2lPRCD_A4y7-162" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="- denominationHandler: Map[Denomination] DenominationHandler&lt;div&gt;- chainHead: DenominationHandler&lt;/div&gt;" vertex="1">
+          <mxGeometry height="34" width="370" y="26" as="geometry" />
         </mxCell>
         <mxCell id="Fn-RA2IZX2lPRCD_A4y7-164" parent="Fn-RA2IZX2lPRCD_A4y7-162" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
-          <mxGeometry height="8" width="370" y="50" as="geometry" />
+          <mxGeometry height="8" width="370" y="60" as="geometry" />
         </mxCell>
         <mxCell id="Fn-RA2IZX2lPRCD_A4y7-165" parent="Fn-RA2IZX2lPRCD_A4y7-162" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ NewCashDispenser():: CashDispenser&lt;div&gt;+ Dispense(amount: float64):: error&lt;/div&gt;&lt;div&gt;+ AddCash(denomination: Denomination, count: int):: void&lt;/div&gt;&lt;div&gt;+ GetTotalCash():: float64&lt;/div&gt;" vertex="1">
-          <mxGeometry height="72" width="370" y="58" as="geometry" />
+          <mxGeometry height="72" width="370" y="68" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

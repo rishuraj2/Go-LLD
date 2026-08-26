@@ -16,8 +16,8 @@ func NewCreateAccountUseCase(repo repository.BankRepository) *CreateAccountUseCa
 	}
 }
 
-func (this *CreateAccountUseCase) Execute(accountType enum.AccountType) account.Account {
+func (this *CreateAccountUseCase) Execute(accountType enum.AccountType) string {
 	account := account.NewAccount(account.NewAccountNumberGenerator().Generate(accountType), accountType)
 	this.repository.CreateAccount(account)
-	return account
+	return account.GetAccountNumber()
 }

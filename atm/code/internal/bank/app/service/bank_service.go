@@ -3,8 +3,6 @@ package service
 import (
 	"atm/internal/bank/app/usecase"
 	"atm/internal/bank/domain/enum"
-	"atm/internal/bank/domain/model/account"
-	"atm/internal/bank/domain/model/card"
 	"atm/internal/bank/domain/model/transaction"
 	"atm/internal/bank/repository"
 )
@@ -31,15 +29,15 @@ func NewBankService(repo repository.BankRepository) *BankService {
 	}
 }
 
-func (this *BankService) CreateAccount(accountType enum.AccountType) account.Account {
+func (this *BankService) CreateAccount(accountType enum.AccountType) string {
 	return this.createAccountUseCase.Execute(accountType)
 }
 
-func (this *BankService) CreateCard(accountNumber, pin string) (card.Card, error) {
+func (this *BankService) CreateCard(accountNumber, pin string) (string, error) {
 	return this.createCardUseCase.Execute(accountNumber, pin)
 }
 
-func (this *BankService) AuthenticateCard(cardNumber, pin string) (account.Account, error) {
+func (this *BankService) AuthenticateCard(cardNumber, pin string) (string, error) {
 	return this.authenticateCardUseCase.Execute(cardNumber, pin)
 }
 

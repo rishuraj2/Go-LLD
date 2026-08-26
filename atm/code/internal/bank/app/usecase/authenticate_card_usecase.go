@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"atm/internal/bank/domain/model/account"
 	"atm/internal/bank/repository"
 	"errors"
 )
@@ -16,16 +15,20 @@ func NewAuthenticateCardUseCase(repo repository.BankRepository) *AuthenticateCar
 	}
 }
 
-func (this *AuthenticateCardUseCase) Execute(cardNumber, pin string) (account.Account, error) {
+func (this *AuthenticateCardUseCase) Execute(cardNumber, pin string) (string, error) {
 	card, err := this.repository.FindCardByCardNumber(cardNumber)
 	if err != nil {
-		return account.Account{}, err
+		return "", err
 	}
 
 	if card.GetPin() == pin {
-		return this.repository.FindAccountByNumber(card.GetAccountNumber())
+		acc, err := this.repository.FindAccountByNumber(card.GetAccountNumber())
+		if err != nil {
+			return "", err
+		}
+		return acc.GetAccountNumber(), nil
 	}
 
-	return account.Account{}, errors.New("invalid card pin")
+	return "", errors.New("invalid card pin")
 
 }
